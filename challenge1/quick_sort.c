@@ -28,8 +28,8 @@ double* quick_sort(int num_values, double* array){
     double* equal = NULL;
     double* greater = NULL;
 
-    partition(num_values, array, &numLess, less, &numEqual, equal, &numGreater,
-        greater);
+    partition(num_values, array, &numLess, &less, &numEqual, &equal, &numGreater,
+        &greater);
 
 
     // for some reason, all partitions are still pointing at NULL
@@ -39,8 +39,8 @@ double* quick_sort(int num_values, double* array){
      
 }
 
-void partition(int num_values, double* array, int* numLess, double* less, int*
-    numEqual, double* equal, int* numGreater, double* greater){
+void partition(int num_values, double* array, int* numLess, double** less, 
+    int* numEqual, double** equal, int* numGreater, double** greater){
    
     int pivot = array[0];
 
@@ -49,16 +49,14 @@ void partition(int num_values, double* array, int* numLess, double* less, int*
         int value = array[i];
 
         if (value < pivot){
-            append(value, *numLess, &less);
+            append(value, *numLess, less);
             *numLess += 1;
         }else if (value == pivot){
-            append(value, *numEqual, &equal);
+            append(value, *numEqual, equal);
             *numEqual += 1;
-            print_array(*numEqual, equal);
         }else{
-            append(value, *numGreater, &greater);
+            append(value, *numGreater, greater);
             *numGreater += 1;
-            print_array(*numGreater, greater);
         }
 
     }

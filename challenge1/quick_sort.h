@@ -1,5 +1,5 @@
-void partition(int num_values, double* array, int* numLess, double* less, 
-    int* numEqual, double* equal, int* numGreater, double* greater);
+void partition(int num_values, double* array, int* numLess, double** less, 
+    int* numEqual, double** equal, int* numGreater, double** greater);
 
 /// Concats two arrays of given size in order of the arguments into array1.
 /// @param
