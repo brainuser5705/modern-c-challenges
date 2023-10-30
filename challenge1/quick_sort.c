@@ -12,6 +12,8 @@ int main(int argc, char** argv){
     printf("Original array: \n");
     print_array(num_values, array);
 
+    printf("Final array: \n");
+    print_array(num_values, quick_sort(num_values, array));
 
     quick_sort(num_values, array);
     return 0;
@@ -19,6 +21,10 @@ int main(int argc, char** argv){
 }
 
 double* quick_sort(int num_values, double* array){
+
+    if (num_values == 0){
+        return NULL;
+    }
 
     // setting initial values 
     int numLess = 0;
@@ -31,17 +37,26 @@ double* quick_sort(int num_values, double* array){
     partition(num_values, array, &numLess, &less, &numEqual, &equal, &numGreater,
         &greater);
 
+    double* sortedLess = quick_sort(numLess, less);
+    double* sortedGreater = quick_sort(numGreater, greater);
 
-    // for some reason, all partitions are still pointing at NULL
-    print_array(numLess, less);
-    print_array(numEqual, equal);
-    print_array(numGreater, greater);
+    // less is the base array
+    concat(numLess, &less, numEqual, &equal);
+    concat(numLess + numEqual, &less, numGreater, &greater);
+
+    print_array(numLess + numEqual, sortedLess);
+
+    return sortedLess;
      
 }
 
 void partition(int num_values, double* array, int* numLess, double** less, 
     int* numEqual, double** equal, int* numGreater, double** greater){
-   
+
+    if (!num_values){
+        return;
+    }
+
     int pivot = array[0];
 
     for (int i = 0; i < num_values; i++){
